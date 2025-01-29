@@ -127,5 +127,15 @@ int main() {
 	team[0].setPassMade(20);
 
 	team[0].PassBall();
+	
+	int Shoot(BballPlayer player) {
+        srand(time(0))
+        std::cout << "How many points are you going for?" << std::endl;
+        int userPoints;
+        cin >> userPoints;
+
+        return player.TakeShot(userPoints);
+    }
+    
 }
 
