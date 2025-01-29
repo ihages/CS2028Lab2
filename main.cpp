@@ -36,19 +36,30 @@ class BballPlayer {
 
 		// getters
 
-		int getPasAtt() {
+		std::string getName() {
+			return name;
+		}
+		const int getPasAtt() {
 			return passesAttempted;
 		}
-		int getPasMade() {
+		const int getPasMade() {
 			return passesMade;
 		}
+		const int getShotTake() {
+			return shotsTaken;
+		}
+		const int getShotMade() {
+			return shotsMade;
+		}
+
+		// modifiers
 		void incPasAtt() {
 			passesAttempted++;
 		}
 		void incPasMade() {
 			passesMade++;
 		}
- 		void incShtTake() {
+		void incShtTake() {
 			shotsTaken++;
 		}
 		void incShtMade() {
@@ -60,7 +71,7 @@ class BballPlayer {
 
 		bool PassBall() {
 
-			double passPercentage = 100.00 * static_cast<double> (this->passesMade) / static_cast<double>(this->passesAttempted);
+			double passPercentage = 100.00 * static_cast<double> (passesMade) / static_cast<double>(passesAttempted);
 			// return value regards to if a pass was successful or not
 			// pulls a random number between 1-100 and if % > passesmade/passes attempted
 
@@ -82,40 +93,42 @@ class BballPlayer {
 				return false;
 			}
 		}
-		
-		 int TakeShot(int point) {
-            srand(time(0));
 
-            double shotPerc = 100 * static_cast<double>(shotsMade) / shotsTaken;
-            incShtAtt();
+		int TakeShot(int point) {
+			srand(time(0));
 
-            if (point == 3){
-                int randNum = (rand() % 71);
-                if (shotPerc > randNum){
-                    //std::cout << "made 3 point" << std::endl;
-                    incShtMade();
-                    return point;
-                }
-            } else if (point == 2) {
-                int randNum = (rand() % 101);
-                if (shotPerc > randNum){
-                    //std::cout << "made 2 point" << std::endl;
-                    incShtMade();
-                    return point;
-                }
-            } else if (point == 1) {
-                int randNum = (rand() % 126);
-                if (shotPerc > randNum){
-                    //std::cout << "made 1 point" << std::endl;
-                    incShtMade();
-                    return point;
-                }
-            } else {
-                return 0;
-            }
+			double shotPerc = 100 * static_cast<double>(shotsMade) / shotsTaken;
+			incShtTake();
 
-            return 0;
-    }
+			if (point == 3) {
+				int randNum = (rand() % 71);
+				if (shotPerc > randNum) {
+					//std::cout << "made 3 point" << std::endl;
+					incShtMade();
+					return point;
+				}
+			}
+			else if (point == 2) {
+				int randNum = (rand() % 101);
+				if (shotPerc > randNum) {
+					//std::cout << "made 2 point" << std::endl;
+					incShtMade();
+					return point;
+				}
+			}
+			else if (point == 1) {
+				int randNum = (rand() % 126);
+				if (shotPerc > randNum) {
+					//std::cout << "made 1 point" << std::endl;
+					incShtMade();
+					return point;
+				}
+			}
+			else {
+				return 0;
+			}
+			return 0;
+		}
 
 };
 
@@ -123,19 +136,81 @@ int main() {
 
 	BballPlayer team[5] = { {"Jack"},{"Quinton"},{"John"},{"Steve"},{"Cinco"} };
 
-	team[0].setPassAtt(40);
-	team[0].setPassMade(20);
+	//jack
+	team[0].setPassAtt(15);
+	team[0].setPassMade(8);
+	team[0].setShotTake(9);
+	team[0].setShotMade(2);
 
-	team[0].PassBall();
+	//quinton
+	team[1].setPassAtt(90);
+	team[1].setPassMade(78);
+	team[1].setShotTake(63);
+	team[1].setShotMade(40);
+
+	//john
+	team[2].setPassAtt(56);
+	team[2].setPassMade(30);
+	team[2].setShotTake(92);
+	team[2].setShotMade(78);
+
+	//steve
+	team[3].setPassAtt(84);
+	team[3].setPassMade(50);
+	team[3].setShotTake(9);
+	team[3].setShotMade(1);
+
+	//Cinco
+	team[4].setPassAtt(70);
+	team[4].setPassMade(5);
+	team[4].setShotTake(80);
+	team[4].setShotMade(70);
+
+
+	for (int pos{ 0 }; pos < 30; pos++) {
+		//tell user which player has poss, display name, stats
+		//player /w/ pos is randomized
+
+		srand(time(0) + 4);
+
+		int currPlayerNumber = rand() % 6;
+
+		std::cout << team[currPlayerNumber].getName() << " has the ball. His stats are:" << std::endl;
+		std::cout << "Pass Attempts: " << team[currPlayerNumber].getPasAtt();
+		std::cout << "\tPasses Made: " << team[currPlayerNumber].getPasMade() << std::endl;
+		std::cout << "\nShots Taken: " << team[currPlayerNumber].getShotTake();
+		std::cout << "\t\tShots Made: " << team[currPlayerNumber].getShotMade() << "\n" << std::endl;
+		
+		std::cout << "\nWhat would you like to do?" << std::endl;
+		std::cout << "Pass (1) \t Shoot (2) \t See Stats (3) \t See Score (4)" << std::endl;
+
+		int playCall{ 0 };
+
+		std::cin >> playCall;
+
+		if (playCall == 1) {
+			if (team[currPlayerNumber].PassBall()) {
+				std::cout << "\nWho do you want to pass to?";
+					return 0;
+			}
+			else {
+				std::cout << "The pass was intercepted! The opponent will now get the ball." << std::endl;
+				continue;
+			}
+		}
+		else if (playCall == 2) {
+			std::cout << "And " << team[currPlayerNumber].getName() << " lines up for the shot! He's going for a...(1,2, or 3)" << std::endl;
+			int scoreAttempt{ 0 };
+			std::cin >> scoreAttempt;
+			if (team[currPlayerNumber].TakeShot(scoreAttempt) > 0) {
+				std::cout << "The shot was made and the points have been added to the scoreboard. \nThe opposing team will now take posession" << std::endl;
+			}
+		}
+		// if playcall is two and the shot fails, then the opposing team takes the ball, 
+		// use continue to go to the top of the for loop
+
+		return 0;
+	}
 	
-	int Shoot(BballPlayer player) {
-        srand(time(0))
-        std::cout << "How many points are you going for?" << std::endl;
-        int userPoints;
-        cin >> userPoints;
-
-        return player.TakeShot(userPoints);
-    }
-    
 }
 
