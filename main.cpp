@@ -231,6 +231,7 @@ int main() {
 			std::cin >> scoreAttempt;
 			if (team[currPlayerNumber].TakeShot(scoreAttempt) > 0) {
 				std::cout << "The shot was made and the points have been added to the scoreboard. \nThe opposing team will now take posession" << std::endl;
+				continue;
 			}
 		}
 		// if playcall is two and the shot fails, then the opposing team takes the ball, 
