@@ -17,7 +17,13 @@ class BballPlayer {
 		//constructor
 		BballPlayer(std::string n) {
 			name = n;
+			shotsTaken = 0;
+			shotsMade = 0;
+			passesAttempted = 0;
+			passesMade = 0;
 		}
+
+		
 
 		//setters
 		void setName(std::string n) {
@@ -71,6 +77,7 @@ class BballPlayer {
 		//functions
 		bool PassBall();
 		int TakeShot(int);
+		void randomizePlayerStats();
 };
 
 

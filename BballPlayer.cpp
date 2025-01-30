@@ -10,7 +10,7 @@ bool BballPlayer::PassBall() {
     // return value regards to if a pass was successful or not
     // pulls a random number between 1-100 and if % > passesmade/passes attempted
 
-    double difficulty = rand() % 101;
+    double difficulty = (rand() % 100) + 1;
 
     incPasAtt();
 
@@ -28,7 +28,7 @@ int BballPlayer::TakeShot(int point) {
     incShtTake();
 
     if (point == 3) {
-        int randNum = (rand() % 71);
+        int randNum = ((rand() % 70) + 1);
         if (shotPerc > randNum) {
             //std::cout << "made 3 point" << std::endl;
             incShtMade();
@@ -36,7 +36,7 @@ int BballPlayer::TakeShot(int point) {
         }
     }
     else if (point == 2) {
-        int randNum = (rand() % 101);
+        int randNum = ((rand() % 100) + 1);
         if (shotPerc > randNum) {
             //std::cout << "made 2 point" << std::endl;
             incShtMade();
@@ -44,7 +44,7 @@ int BballPlayer::TakeShot(int point) {
         }
     }
     else if (point == 1) {
-        int randNum = (rand() % 126);
+        int randNum = ((rand() % 125) + 1);
         if (shotPerc > randNum) {
             //std::cout << "made 1 point" << std::endl;
             incShtMade();
@@ -55,4 +55,11 @@ int BballPlayer::TakeShot(int point) {
         return 0;
     }
     return 0;
+    }
+
+    void BballPlayer::randomizePlayerStats(){
+        shotsMade = (rand() % 100) + 1;
+        shotsTaken = (rand() % 100) + 1 + shotsMade;
+        passesMade = (rand() % 100) + 1;
+        passesAttempted = (rand() % 100) + 1 + passesMade;
     }
