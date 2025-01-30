@@ -79,17 +79,17 @@ class BballPlayer {
 
 			double difficulty = rand() % 101;
 
-			std::cout << "difficulty: " << difficulty << std::endl;
-			std::cout << "player stat: " << passPercentage << std::endl;
+			//std::cout << "difficulty: " << difficulty << std::endl;
+			//std::cout << "player stat: " << passPercentage << std::endl;
 
 			incPasAtt();
 
 			if (difficulty < passPercentage) {
 				incPasMade();
-				std::cout << "the pass was made";
+				//std::cout << "the pass was made";
 				return true;
 			} else {
-				std::cout << "the pass failed";
+				//std::cout << "the pass failed";
 				return false;
 			}
 		}
@@ -166,6 +166,10 @@ int main() {
 	team[4].setShotTake(80);
 	team[4].setShotMade(70);
 
+	//Opponents
+	int oppScore{0};
+
+
 
 	for (int pos{ 0 }; pos < 30; pos++) {
 		//tell user which player has poss, display name, stats
@@ -173,7 +177,7 @@ int main() {
 
 		srand(time(0) + 4);
 
-		int currPlayerNumber = rand() % 6;
+		int currPlayerNumber = rand() % 5;
 
 		std::cout << team[currPlayerNumber].getName() << " has the ball. His stats are:" << std::endl;
 		std::cout << "Pass Attempts: " << team[currPlayerNumber].getPasAtt();
@@ -189,13 +193,36 @@ int main() {
 		std::cin >> playCall;
 
 		if (playCall == 1) {
+			std::string passPlayer{""};
+			bool validPlayer{false};
+			
+			//add way to check if the player you are inputting is valid or not repeat if not
+			while(!validPlayer){
+				if(!validPlayer){
+					std::cout << "Who do you want to pass to?" << std::endl;
+				}
+				for (int i{}; i < 5; i++) {
+					if (i != currPlayerNumber){
+							std::cout << team[i].getName() << "? ";
+						}
+					}
+				
+					std::cout << std::endl;
+					std::cin >> passPlayer;
+				for (int i{}; i < 5; i++) {
+					if(team[i].getName() == passPlayer){
+							validPlayer = true;
+					}
+				}
+			}
+		
+			
 			if (team[currPlayerNumber].PassBall()) {
-				std::cout << "\nWho do you want to pass to?";
-					return 0;
+				std::cout << "Pass successfully passed to " << passPlayer << "!" << std::endl;
+				continue;
 			}
 			else {
-				std::cout << "The pass was intercepted! The opponent will now get the ball." << std::endl;
-				continue;
+				std::cout << "Your pass to " << passPlayer << " was intercepted! The opponent will now get the ball." << std::endl;
 			}
 		}
 		else if (playCall == 2) {
@@ -209,6 +236,26 @@ int main() {
 		// if playcall is two and the shot fails, then the opposing team takes the ball, 
 		// use continue to go to the top of the for loop
 
+		std::cout << "Now it's the opponents turn" << std::endl;
+
+		bool oppsTurn = true;
+
+		while(oppsTurn){
+			if (rand() % 100 < 60){
+				int pointsScored = rand() % 3 + 1;
+				std::cout << "Your opponents scored a " << pointsScored << " pointer!" << std::endl;
+				oppScore += pointsScored;
+			} else {
+				std::cout << "Your opponents missed!" << std::endl;
+			}
+
+			if (rand() % 100 < 50){
+				std::cout << "Your opponents kept possession." << std::endl;
+			} else {
+				std::cout << "You've gained possession!" << std::endl;
+				oppsTurn = false;
+			}
+		}
 		return 0;
 	}
 	
