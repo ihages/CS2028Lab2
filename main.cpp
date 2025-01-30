@@ -149,20 +149,22 @@ int main() {
 
 	int oppScore{ 0 };
 	int playScore{ 0 };
+	bool allowPlayerRandomizing = true;
+	int currPlayerNumber = rand() % 5;
 
 	for (int pos{ 0 }; pos < 30; pos++) {
 		//tell user which player has poss, display name, stats
 		//player /w/ pos is randomized
 
+		if (allowPlayerRandomizing){
+			int currPlayerNumber = rand() % 5;
 		
-
-		int currPlayerNumber = rand() % 5;
-
-		std::cout << "\n" << team[currPlayerNumber].getName() << " has the ball. His stats are:" << std::endl;
-		std::cout << "Pass Attempts: " << team[currPlayerNumber].getPasAtt() << std::endl;
-		std::cout << "Passes Made: " << team[currPlayerNumber].getPasMade() << std::endl;
-		std::cout << "Shots Taken: " << team[currPlayerNumber].getShotTake() << std::endl;
-		std::cout << "Shots Made: " << team[currPlayerNumber].getShotMade() << std::endl;
+			std::cout << "\n" << team[currPlayerNumber].getName() << " has the ball. His stats are:" << std::endl;
+			std::cout << "Pass Attempts: " << team[currPlayerNumber].getPasAtt() << std::endl;
+			std::cout << "Passes Made: " << team[currPlayerNumber].getPasMade() << std::endl;
+			std::cout << "Shots Taken: " << team[currPlayerNumber].getShotTake() << std::endl;
+			std::cout << "Shots Made: " << team[currPlayerNumber].getShotMade() << std::endl;
+		}
 
 		std::cout << "\nWhat would you like to do?" << std::endl;
 		std::cout << "Pass (1) \t Shoot (2) \t See Stats (3) \t See Score (4)" << std::endl;
@@ -201,7 +203,8 @@ int main() {
 			//checks if the pass was successful
 			if (team[currPlayerNumber].PassBall()) {
 				std::cout << "\nPass successfully passed to " << passPlayer << "!" << std::endl;
-				pos++; //this line and the following line will essentially bring the loop to the top but not make it so that the team loses a posession.
+				//pos--; //this line and the following line will essentially bring the loop to the top but not make it so that the team loses a posession.
+				allowPlayerRandomizing = true;
 				continue;
 			}
 			else {
@@ -223,7 +226,8 @@ int main() {
 				std::cout << "The shot was missed." << std::endl;
 				if (rand() % 100 < 50) {
 					std::cout << "You kept possession." << std::endl;
-					pos++;
+					allowPlayerRandomizing = true;
+					//pos--;
 					continue;
 				}
 				else {
@@ -236,14 +240,16 @@ int main() {
 			std::cout << "Passes Made: " << team[currPlayerNumber].getPasMade() << std::endl;
 			std::cout << "Shots Taken: " << team[currPlayerNumber].getShotTake() << std::endl;
 			std::cout << "Shots Made: " << team[currPlayerNumber].getShotMade() << std::endl;
-			pos++;
+			allowPlayerRandomizing = false;
+			pos--;
 			continue;
 
 		} else if (playCall == 4) {
 			std::cout << "\nYour score: " << playScore << std::endl;
 			std::cout << "Opponent score: " << oppScore << std::endl;
 			std::cout << "Possessions left: " << 30 - pos << std::endl;
-			pos++;
+			allowPlayerRandomizing = false;
+			pos--;
 			continue;
 		}
 		else if (playCall == 23) {
@@ -262,6 +268,7 @@ int main() {
 				std::cout << "Your opponents scored a " << pointsScored << " pointer! Now you will get possession" << std::endl;
 				oppScore += pointsScored;
 				oppsTurn = false;
+				allowPlayerRandomizing = true;
 				continue;
 			} else {
 				std::cout << "Your opponents took a shot and missed!" << std::endl;
@@ -271,13 +278,14 @@ int main() {
 			} else {
 				std::cout << "\nYou've gained possession!" << std::endl;
 				oppsTurn = false;
+				allowPlayerRandomizing = true;
 				continue;
 			}
 		}
 		std::cout << "Pos: " << pos << std::endl;
 	}
 
-	std::cout << "It's the end of the game and the scores are in...\n Your opponent scored " << oppScore << "points...\n and you scored..." << std::endl;
+	std::cout << "It's the end of the game and the scores are in...\n Your opponent scored " << oppScore << " points...\n and you scored..." << std::endl;
 	if (oppScore > playScore) {
 		std::cout << playScore << " points. Better luck next time!" << std::endl;
 	} else if(oppScore < playScore) {
