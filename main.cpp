@@ -128,6 +128,7 @@ class BballPlayer {
 };
 
 int main() {
+	srand(time(nullptr));
 
 	BballPlayer team[5] = { {"Jack"},{"Quinton"},{"John"},{"Steve"},{"Cinco"} };
 
@@ -153,11 +154,11 @@ int main() {
 		//tell user which player has poss, display name, stats
 		//player /w/ pos is randomized
 
-		srand(time(0) + 4);
+		
 
 		int currPlayerNumber = rand() % 5;
 
-		std::cout << team[currPlayerNumber].getName() << " has the ball. His stats are:" << std::endl;
+		std::cout << "\n" << team[currPlayerNumber].getName() << " has the ball. His stats are:" << std::endl;
 		std::cout << "Pass Attempts: " << team[currPlayerNumber].getPasAtt() << std::endl;
 		std::cout << "Passes Made: " << team[currPlayerNumber].getPasMade() << std::endl;
 		std::cout << "Shots Taken: " << team[currPlayerNumber].getShotTake() << std::endl;
@@ -191,6 +192,9 @@ int main() {
 					if (team[i].getName() == passPlayer) {
 						validPlayer = true;
 					}
+				}
+				if (!validPlayer){
+					std::cout << "Please enter a valid player's name - ";
 				}
 			}
 
@@ -227,7 +231,7 @@ int main() {
 				}
 			}
 		} else if(playCall == 3){
-			std::cout << "\n"<<team[currPlayerNumber].getName() << "'s stats are:" << std::endl;
+			std::cout << "\n"<< team[currPlayerNumber].getName() << "'s stats are:" << std::endl;
 			std::cout << "Pass Attempts: " << team[currPlayerNumber].getPasAtt() << std::endl;
 			std::cout << "Passes Made: " << team[currPlayerNumber].getPasMade() << std::endl;
 			std::cout << "Shots Taken: " << team[currPlayerNumber].getShotTake() << std::endl;
