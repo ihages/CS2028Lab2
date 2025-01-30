@@ -1,147 +1,29 @@
+#include "BballPlayer.h"
 #include <iostream>
 #include <string>
 #include <ctime>
 
-class BballPlayer {
-	private:
-		std::string name{ " " };
-		int shotsTaken{ 0 };
-		int shotsMade{ 0 };
-		int passesAttempted{ 0 };
-		int passesMade{ 0 };
 
-	public:
-
-		//constructor
-		BballPlayer(std::string n) {
-			name = n;
-		}
-
-		//setters
-		void setName(std::string n) {
-			name = n;
-		}
-		void setShotTake(int st) {
-			shotsTaken = st;
-		}
-		void setShotMade(int sm) {
-			shotsMade = sm;
-		}
-		void setPassAtt(int pa) {
-			passesAttempted = pa;
-		}
-		void setPassMade(int pm) {
-			passesMade = pm;
-		}
-
-		// getters
-		std::string getName() {
-			return name;
-		}
-		int getPasAtt() const{
-			return passesAttempted;
-		}
-		int getPasMade() const{
-			return passesMade;
-		}
-		int getShotTake() const {
-			return shotsTaken;
-		}
-		int getShotMade() const {
-			return shotsMade;
-		}
+bool PassBall();
+int TakeShot(int);
 
 
-		// modifiers
-		void incPasAtt() {
-			passesAttempted++;
-		}
-		void incPasMade() {
-			passesMade++;
-		}
-		void incShtTake() {
-			shotsTaken++;
-		}
-		void incShtMade() {
-			shotsMade++;
-		}
-
-
-		// funtions
-		bool PassBall() {
-
-			double passPercentage = 100.00 * static_cast<double> (passesMade) / static_cast<double>(passesAttempted);
-			// return value regards to if a pass was successful or not
-			// pulls a random number between 1-100 and if % > passesmade/passes attempted
-
-			srand(time(0));
-
-			double difficulty = rand() % 101;
-
-
-			incPasAtt();
-
-			if (difficulty < passPercentage) {
-				incPasMade();
-				return true;
-			} else {
-				return false;
-			}
-		}
-
-		int TakeShot(int point) {
-			srand(time(0));
-
-			double shotPerc = 100 * static_cast<double>(shotsMade) / shotsTaken;
-			incShtTake();
-
-			if (point == 3) {
-				int randNum = (rand() % 71);
-				if (shotPerc > randNum) {
-					//std::cout << "made 3 point" << std::endl;
-					incShtMade();
-					return point;
-				}
-			}
-			else if (point == 2) {
-				int randNum = (rand() % 101);
-				if (shotPerc > randNum) {
-					//std::cout << "made 2 point" << std::endl;
-					incShtMade();
-					return point;
-				}
-			}
-			else if (point == 1) {
-				int randNum = (rand() % 126);
-				if (shotPerc > randNum) {
-					//std::cout << "made 1 point" << std::endl;
-					incShtMade();
-					return point;
-				}
-			}
-			else {
-				return 0;
-			}
-			return 0;
-		}
-
-};
 
 int main() {
 	srand(time(nullptr));
 
 	BballPlayer team[5] = { {"Jack"},{"Quinton"},{"John"},{"Steve"},{"Cinco"} };
 
-	//jack
+	//Jack
 	team[0].setPassAtt(15);	team[0].setPassMade(8);	team[0].setShotTake(9);	team[0].setShotMade(2);
 
-	//quinton
+	//Quinton
 	team[1].setPassAtt(90);	team[1].setPassMade(78); team[1].setShotTake(63); team[1].setShotMade(40);
 
-	//john
+	//John
 	team[2].setPassAtt(56);	team[2].setPassMade(30); team[2].setShotTake(92); team[2].setShotMade(78);
 
-	//steve
+	//Steve
 	team[3].setPassAtt(84); team[3].setPassMade(50); team[3].setShotTake(9); team[3].setShotMade(1);
 
 	//Cinco
