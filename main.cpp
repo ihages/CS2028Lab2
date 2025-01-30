@@ -12,12 +12,12 @@ class BballPlayer {
 
 	public:
 
+		//constructor
 		BballPlayer(std::string n) {
 			name = n;
 		}
 
 		//setters
-
 		void setName(std::string n) {
 			name = n;
 		}
@@ -35,22 +35,22 @@ class BballPlayer {
 		}
 
 		// getters
-
 		std::string getName() {
 			return name;
 		}
-		const int getPasAtt() {
+		int getPasAtt() const{
 			return passesAttempted;
 		}
-		const int getPasMade() {
+		int getPasMade() const{
 			return passesMade;
 		}
-		const int getShotTake() {
+		int getShotTake() const {
 			return shotsTaken;
 		}
-		const int getShotMade() {
+		int getShotMade() const {
 			return shotsMade;
 		}
+
 
 		// modifiers
 		void incPasAtt() {
@@ -68,7 +68,6 @@ class BballPlayer {
 
 
 		// funtions
-
 		bool PassBall() {
 
 			double passPercentage = 100.00 * static_cast<double> (passesMade) / static_cast<double>(passesAttempted);
@@ -79,17 +78,13 @@ class BballPlayer {
 
 			double difficulty = rand() % 101;
 
-			//std::cout << "difficulty: " << difficulty << std::endl;
-			//std::cout << "player stat: " << passPercentage << std::endl;
 
 			incPasAtt();
 
 			if (difficulty < passPercentage) {
 				incPasMade();
-				//std::cout << "the pass was made";
 				return true;
 			} else {
-				//std::cout << "the pass failed";
 				return false;
 			}
 		}
@@ -137,39 +132,22 @@ int main() {
 	BballPlayer team[5] = { {"Jack"},{"Quinton"},{"John"},{"Steve"},{"Cinco"} };
 
 	//jack
-	team[0].setPassAtt(15);
-	team[0].setPassMade(8);
-	team[0].setShotTake(9);
-	team[0].setShotMade(2);
+	team[0].setPassAtt(15);	team[0].setPassMade(8);	team[0].setShotTake(9);	team[0].setShotMade(2);
 
 	//quinton
-	team[1].setPassAtt(90);
-	team[1].setPassMade(78);
-	team[1].setShotTake(63);
-	team[1].setShotMade(40);
+	team[1].setPassAtt(90);	team[1].setPassMade(78); team[1].setShotTake(63); team[1].setShotMade(40);
 
 	//john
-	team[2].setPassAtt(56);
-	team[2].setPassMade(30);
-	team[2].setShotTake(92);
-	team[2].setShotMade(78);
+	team[2].setPassAtt(56);	team[2].setPassMade(30); team[2].setShotTake(92); team[2].setShotMade(78);
 
 	//steve
-	team[3].setPassAtt(84);
-	team[3].setPassMade(50);
-	team[3].setShotTake(9);
-	team[3].setShotMade(1);
+	team[3].setPassAtt(84); team[3].setPassMade(50); team[3].setShotTake(9); team[3].setShotMade(1);
 
 	//Cinco
-	team[4].setPassAtt(70);
-	team[4].setPassMade(5);
-	team[4].setShotTake(80);
-	team[4].setShotMade(70);
+	team[4].setPassAtt(70); team[4].setPassMade(5); team[4].setShotTake(80); team[4].setShotMade(70);
 
-	//Opponents
-	int oppScore{0};
-
-
+	int oppScore{ 0 };
+	int playScore{ 0 };
 
 	for (int pos{ 0 }; pos < 30; pos++) {
 		//tell user which player has poss, display name, stats
@@ -180,45 +158,46 @@ int main() {
 		int currPlayerNumber = rand() % 5;
 
 		std::cout << team[currPlayerNumber].getName() << " has the ball. His stats are:" << std::endl;
-		std::cout << "Pass Attempts: " << team[currPlayerNumber].getPasAtt();
-		std::cout << "\tPasses Made: " << team[currPlayerNumber].getPasMade() << std::endl;
-		std::cout << "\nShots Taken: " << team[currPlayerNumber].getShotTake();
-		std::cout << "\t\tShots Made: " << team[currPlayerNumber].getShotMade() << "\n" << std::endl;
-		
+		std::cout << "Pass Attempts: " << team[currPlayerNumber].getPasAtt() << std::endl;
+		std::cout << "Passes Made: " << team[currPlayerNumber].getPasMade() << std::endl;
+		std::cout << "Shots Taken: " << team[currPlayerNumber].getShotTake() << std::endl;
+		std::cout << "Shots Made: " << team[currPlayerNumber].getShotMade() << std::endl;
+
 		std::cout << "\nWhat would you like to do?" << std::endl;
 		std::cout << "Pass (1) \t Shoot (2) \t See Stats (3) \t See Score (4)" << std::endl;
 
 		int playCall{ 0 };
 
 		std::cin >> playCall;
+		std::cout << std::endl;
 
 		if (playCall == 1) {
-			std::string passPlayer{""};
-			bool validPlayer{false};
-			
+			std::string passPlayer{ "" };
+			bool validPlayer{ false };
+
 			//add way to check if the player you are inputting is valid or not repeat if not
-			while(!validPlayer){
-				if(!validPlayer){
+			while (!validPlayer) {
+				if (!validPlayer) {
 					std::cout << "Who do you want to pass to?" << std::endl;
 				}
 				for (int i{}; i < 5; i++) {
-					if (i != currPlayerNumber){
-							std::cout << team[i].getName() << "? ";
-						}
+					if (i != currPlayerNumber) {
+						std::cout << team[i].getName() << " ? ";
 					}
-				
-					std::cout << std::endl;
-					std::cin >> passPlayer;
+				}
+				std::cout << std::endl;
+				std::cin >> passPlayer;
 				for (int i{}; i < 5; i++) {
-					if(team[i].getName() == passPlayer){
-							validPlayer = true;
+					if (team[i].getName() == passPlayer) {
+						validPlayer = true;
 					}
 				}
 			}
-		
-			
+
+			//checks if the pass was successful
 			if (team[currPlayerNumber].PassBall()) {
-				std::cout << "Pass successfully passed to " << passPlayer << "!" << std::endl;
+				std::cout << "\nPass successfully passed to " << passPlayer << "!" << std::endl;
+				pos++; //this line and the following line will essentially bring the loop to the top but not make it so that the team loses a posession.
 				continue;
 			}
 			else {
@@ -226,39 +205,86 @@ int main() {
 			}
 		}
 		else if (playCall == 2) {
-			std::cout << "And " << team[currPlayerNumber].getName() << " lines up for the shot! He's going for a...(1,2, or 3)" << std::endl;
+			std::cout << "\nAnd " << team[currPlayerNumber].getName() << " lines up for the shot! He's going for a...(1,2, or 3)" << std::endl;
 			int scoreAttempt{ 0 };
 			std::cin >> scoreAttempt;
-			if (team[currPlayerNumber].TakeShot(scoreAttempt) > 0) {
+
+			int points = team[currPlayerNumber].TakeShot(scoreAttempt);
+			playScore += points;
+
+			if (points > 0) {
 				std::cout << "The shot was made and the points have been added to the scoreboard. \nThe opposing team will now take posession" << std::endl;
-				continue;
 			}
+			else {
+				std::cout << "The shot was missed." << std::endl;
+				if (rand() % 100 < 50) {
+					std::cout << "You kept possession." << std::endl;
+					pos++;
+					continue;
+				}
+				else {
+					std::cout << "You lost possession!" << std::endl;
+				}
+			}
+		} else if(playCall == 3){
+			std::cout << "\n"<<team[currPlayerNumber].getName() << "'s stats are:" << std::endl;
+			std::cout << "Pass Attempts: " << team[currPlayerNumber].getPasAtt() << std::endl;
+			std::cout << "Passes Made: " << team[currPlayerNumber].getPasMade() << std::endl;
+			std::cout << "Shots Taken: " << team[currPlayerNumber].getShotTake() << std::endl;
+			std::cout << "Shots Made: " << team[currPlayerNumber].getShotMade() << std::endl;
+			pos++;
+			continue;
+
+		} else if (playCall == 4) {
+			std::cout << "\nYour score: " << playScore << std::endl;
+			std::cout << "Opponent score: " << oppScore << std::endl;
+			std::cout << "Possessions left: " << 30 - pos << std::endl;
+			pos++;
+			continue;
 		}
+		else if (playCall == 23) {
+			//this is an easter egg that uses micheal jordan's jersey number and essentially ends the game for testing purposes
+			break;
+		}
+
 		// if playcall is two and the shot fails, then the opposing team takes the ball, 
 		// use continue to go to the top of the for loop
 
-		std::cout << "Now it's the opponents turn" << std::endl;
-
+		std::cout << "\nNow it's the opponents turn\n" << std::endl;
 		bool oppsTurn = true;
-
-		while(oppsTurn){
-			if (rand() % 100 < 60){
+		while (oppsTurn) {
+			if (rand() % 100 < 60) {
 				int pointsScored = rand() % 3 + 1;
-				std::cout << "Your opponents scored a " << pointsScored << " pointer!" << std::endl;
+				std::cout << "Your opponents scored a " << pointsScored << " pointer! Now you will get possession" << std::endl;
 				oppScore += pointsScored;
+				oppsTurn = false;
+				continue;
 			} else {
-				std::cout << "Your opponents missed!" << std::endl;
+				std::cout << "Your opponents took a shot and missed!" << std::endl;
 			}
-
-			if (rand() % 100 < 50){
+			if (rand() % 100 < 50) {
 				std::cout << "Your opponents kept possession." << std::endl;
 			} else {
-				std::cout << "You've gained possession!" << std::endl;
+				std::cout << "\nYou've gained possession!" << std::endl;
 				oppsTurn = false;
+				continue;
 			}
 		}
-		return 0;
+		std::cout << "Pos: " << pos << std::endl;
 	}
-	
-}
 
+	std::cout << "It's the end of the game and the scores are in...\n Your opponent scored " << oppScore << "points...\n and you scored..." << std::endl;
+	if (oppScore > playScore) {
+		std::cout << playScore << " points. Better luck next time!" << std::endl;
+	} else if(oppScore < playScore) {
+		std::cout << playScore << " points!!! Congratulations!!!" << std::endl;
+	}
+	else if (oppScore == playScore) {
+		std::cout << playScore << " points! That's a tie! Look's like a rematch is in order!" << std::endl;
+	}
+	else {
+		std::cout << playScore << " points? You broke my program? Um...what?" << std::endl;
+	}
+
+	return 0;
+}
