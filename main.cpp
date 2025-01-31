@@ -99,7 +99,7 @@ bool callPlay(int playCall, int &currPlayer, int scores[], int numPos, BballPlay
 	} else if (playCall == 2) {
 		return Shoot(currPlayer, scores[0], team);
 	} else if (playCall == 3) {
-		//seePlayerStats(currPlayer, team);
+		seePlayerStats(currPlayer, team);
 		return true;
 	} else if (playCall == 4) {
 		seeScore (currPlayer,scores, numPos, team);
