@@ -8,12 +8,23 @@ bool PassBall();
 int TakeShot(int);
 void randomizePlayerStats();
 
-
+/*
+Function: 
+	Pass - 
+Input:
+	int currPlayer - the player who is making the play
+	Bballplayer team - an array of all the players on the team
+Goal: 
+	Choose a player that you would like to pass to, confitm that the input given is a vaild player,
+	use the PassBall function to determine if the pass was successfull or not.
+Returns:
+	bool: true if possesion is kept, false if posession is lost
+	updates current player to player ball was passed to
+*/
 bool Pass(int &currPlayer, BballPlayer team[]) {
 	std::string passPlayer{""};
 	bool validPlayer{false};
 
-	//add way to check if the player you are inputting is valid or not repeat if not
 	while (!validPlayer) {
 		if (!validPlayer) {
 			std::cout << "Who do you want to pass to?" << std::endl;
@@ -52,6 +63,22 @@ bool Pass(int &currPlayer, BballPlayer team[]) {
 	return false;
 }
 
+/*
+Function: 
+	Shoot - 
+Input:
+	int currPlayer - the player who is making the play
+	int teamScore - the current score of the player team
+	Bballplayer team - an array of all the players on the team
+Goal: 
+	Take a shot, the user will choose the amount of points that they want to shoot for,
+	call the TakeShot function to determine if the shot was made,
+	update the teamScore if the shot was made,
+	if the shot was missed there is a 50% chance the player loses possesion
+Returns:
+	bool: true if possesion is kept, false if posession is lost
+	updates teamScore based on the amount of points gained
+*/
 bool Shoot(int currPlayer, int &teamScore, BballPlayer team[]){
 	std::cout << "\nAnd " << team[currPlayer].getName() << " lines up for the shot! He's going for a...(1,2, or 3)" << std::endl;
 	int scoreAttempt{ 0 };
@@ -79,6 +106,16 @@ bool Shoot(int currPlayer, int &teamScore, BballPlayer team[]){
 	return false;
 }
 
+/*
+Function: 
+	seePlayerStats - 
+Input:
+	Bballplayer team - an array of all the players on the team
+Goal: 
+	Show the stats of all players on the team
+Returns:
+	void, no return
+*/
 void seePlayerStats(BballPlayer team[]) {
 	for (int i{ 0 }; i < 5; i++) {
 		std::cout << "\n" << team[i].getName() << "'s stats are:" << std::endl;
@@ -88,22 +125,53 @@ void seePlayerStats(BballPlayer team[]) {
 		std::cout << "Shots Made: " << team[i].getShotMade() << std::endl;}
 }
 
-void seeScore(int currPlayer,int scores[], int numPos, BballPlayer team[]){
+/*
+Function: 
+	seeScore - 
+Input:
+	int scores[] - the scores of both teams
+	int numPos - the number of possesions
+Goal: 
+	Shows the score of both teams,
+	Show the number of possessions that are left
+Returns:
+	void, no return
+*/
+void seeScore(int scores[], int numPos){
 	std::cout << "\nYour score: " << scores[0] << std::endl;
 	std::cout << "Opponent score: " << scores[1] << std::endl;
 	std::cout << "Possessions left: " << 30 - numPos << std::endl;
 }
 
+/*
+Function: 
+	callPlay - 
+Input:
+	int playCall - what play should be chosen
+	int currPlayer - the player who is making the play
+	int scores[] - array of the team's score and the opponents score
+	int numPos - the number of possesions
+	Bballplayer team - an array of all the players on the team
+Goal: 
+	Use given playCall to decide which play is made,
+	do the actions of chosen play,
+	return true if the team kept possession
+	return false if the team lost possession
+Returns:
+	bool: true if possesion is kept, false if posession is lost
+	updates current player to player ball was passed to
+	updates scores of the team
+*/
 bool callPlay(int playCall, int &currPlayer, int scores[], int numPos, BballPlayer team[]) {
 	if (playCall == 1){
 		return Pass(currPlayer,team);
 	} else if (playCall == 2) {
 		return Shoot(currPlayer, scores[0], team);
 	} else if (playCall == 3) {
-		seePlayerStats(currPlayer, team);
+		seePlayerStats(team);
 		return true;
 	} else if (playCall == 4) {
-		seeScore (currPlayer,scores, numPos, team);
+		seeScore (scores, numPos);
 		return true;
 	} else {
 		return false;
@@ -111,31 +179,16 @@ bool callPlay(int playCall, int &currPlayer, int scores[], int numPos, BballPlay
 
 }
 
-
 int main() {
 	srand(time(nullptr)); //Get Random number
 
 	BballPlayer team[5] = { {"Jack"},{"Quinton"},{"John"},{"Steve"},{"Cinco"} };
 
-	//Jack
-	//team[0].setPassAtt(15);	team[0].setPassMade(8);	team[0].setShotTake(9);	team[0].setShotMade(2);
-	team[0].randomizePlayerStats();
-
-	//Quinton
-	//team[1].setPassAtt(90);	team[1].setPassMade(78); team[1].setShotTake(63); team[1].setShotMade(40);
-	team[1].randomizePlayerStats();
-
-	//John
-	//team[2].setPassAtt(56);	team[2].setPassMade(30); team[2].setShotTake(92); team[2].setShotMade(78);
-	team[2].randomizePlayerStats();
-
-	//Steve
-	//team[3].setPassAtt(84); team[3].setPassMade(50); team[3].setShotTake(9); team[3].setShotMade(1);
-	team[3].randomizePlayerStats();
-
-	//Cinco
-	//team[4].setPassAtt(70); team[4].setPassMade(5); team[4].setShotTake(80); team[4].setShotMade(70);
-	team[4].randomizePlayerStats();
+	team[0].randomizePlayerStats();	//Jack
+	team[1].randomizePlayerStats(); //Quinton
+	team[2].randomizePlayerStats(); //John
+	team[3].randomizePlayerStats(); //Steve
+	team[4].randomizePlayerStats(); //Cinco
 
 	int scores[] = {0,0}; //Our team index 0, opponents team index 1
 	bool havePossesion = true;
@@ -166,11 +219,6 @@ int main() {
 			havePossesion = callPlay(playCall, currPlayerNumber, scores, pos, team);
 		}
 
-		
-
-		// if playcall is two and the shot fails, then the opposing team takes the ball, 
-		// use continue to go to the top of the for loop
-
 		std::cout << "\nNow it's the opponents turn\n" << std::endl;
 		bool oppsTurn = true;
 		while (oppsTurn) {
@@ -192,7 +240,7 @@ int main() {
 		}
 
 		}
-		
+/*Game is over, go through the final score*/	
 std::cout << "It's the end of the game and the scores are in...\n Your opponent scored " << scores[1] << " points...\n and you scored..." << std::endl;
 if (scores[1] > scores[0]) {
 	std::cout << scores[0] << " points. Better luck next time!" << std::endl;
