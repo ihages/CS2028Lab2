@@ -79,12 +79,13 @@ bool Shoot(int currPlayer, int &teamScore, BballPlayer team[]){
 	return false;
 }
 
-void seePlayerStats(int currPlayer, BballPlayer team[]){
-	std::cout << "\n"<< team[currPlayer].getName() << "'s stats are:" << std::endl;
-	std::cout << "Pass Attempts: " << team[currPlayer].getPasAtt() << std::endl;
-	std::cout << "Passes Made: " << team[currPlayer].getPasMade() << std::endl;
-	std::cout << "Shots Taken: " << team[currPlayer].getShotTake() << std::endl;
-	std::cout << "Shots Made: " << team[currPlayer].getShotMade() << std::endl;
+void seePlayerStats(BballPlayer team[]) {
+	for (int i{ 0 }; i < 5; i++) {
+		std::cout << "\n" << team[i].getName() << "'s stats are:" << std::endl;
+		std::cout << "Pass Attempts: " << team[i].getPasAtt() << std::endl;
+		std::cout << "Passes Made: " << team[i].getPasMade() << std::endl;
+		std::cout << "Shots Taken: " << team[i].getShotTake() << std::endl;
+		std::cout << "Shots Made: " << team[i].getShotMade() << std::endl;}
 }
 
 void seeScore(int currPlayer,int scores[], int numPos, BballPlayer team[]){
