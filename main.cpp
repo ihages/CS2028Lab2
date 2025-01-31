@@ -145,14 +145,14 @@ int main() {
 		//player /w/ pos is randomized
 		int currPlayerNumber = rand() % 5;
 	
-		
+		std::cout << "\n" << team[currPlayerNumber].getName() << " has the ball. His stats are:" << std::endl;
+		std::cout << "Passes Attempted: " << team[currPlayerNumber].getPasAtt() << std::endl;
+		std::cout << "Passes Made: " << team[currPlayerNumber].getPasMade() << std::endl;
+		std::cout << "Shots Taken: " << team[currPlayerNumber].getShotTake() << std::endl;
+		std::cout << "Shots Made: " << team[currPlayerNumber].getShotMade() << std::endl;	
 
 		while(havePossesion){
-			std::cout << "\n" << team[currPlayerNumber].getName() << " has the ball. His stats are:" << std::endl;
-			std::cout << "Passes Attempted: " << team[currPlayerNumber].getPasAtt() << std::endl;
-			std::cout << "Passes Made: " << team[currPlayerNumber].getPasMade() << std::endl;
-			std::cout << "Shots Taken: " << team[currPlayerNumber].getShotTake() << std::endl;
-			std::cout << "Shots Made: " << team[currPlayerNumber].getShotMade() << std::endl;
+
 
 			std::cout << "\nWhat would you like to do?" << std::endl;
 			std::cout << "Pass (1) \t Shoot (2) \t See Stats (3) \t See Score (4)" << std::endl;
