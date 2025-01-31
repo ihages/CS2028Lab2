@@ -189,8 +189,6 @@ int main() {
 				havePossesion = true;
 			}
 		}
-		
-		std::cout << "Pos: " << pos + 1 << std::endl;
 
 		}
 		
