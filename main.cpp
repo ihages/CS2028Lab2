@@ -206,8 +206,6 @@ int main() {
 		std::cout << "Shots Made: " << team[currPlayerNumber].getShotMade() << std::endl;	
 
 		while(havePossesion){
-
-
 			std::cout << "\nWhat would you like to do?" << std::endl;
 			std::cout << "Pass (1) \t Shoot (2) \t See Stats (3) \t See Score (4)" << std::endl;
 
@@ -217,42 +215,44 @@ int main() {
 			std::cout << std::endl;
 
 			havePossesion = callPlay(playCall, currPlayerNumber, scores, pos, team);
-		}
+	}
 
-		std::cout << "\nNow it's the opponents turn\n" << std::endl;
-		bool oppsTurn = true;
-		while (oppsTurn) {
-			if (rand() % 100 < 60) {
-				int pointsScored = rand() % 3 + 1;
-				std::cout << "Your opponents scored a " << pointsScored << " pointer! Now you will get possession" << std::endl;
-				scores[1] += pointsScored;
-				oppsTurn = false;
-			} else {
-				std::cout << "Your opponents took a shot and missed!" << std::endl;
-			}
-			if (rand() % 100 < 50 && oppsTurn == true) {
-				std::cout << "Your opponents kept possession." << std::endl;
-			} else {
-				std::cout << "\nYou've gained possession!" << std::endl;
-				oppsTurn = false;
-				havePossesion = true;
-			}
+	//Opponents turn
+	std::cout << "\nNow it's the opponents turn\n" << std::endl;
+	bool oppsTurn = true;
+	while (oppsTurn) {
+		if (rand() % 100 < 60) {
+			int pointsScored = rand() % 3 + 1;
+			std::cout << "Your opponents scored a " << pointsScored << " pointer! Now you will get possession" << std::endl;
+			scores[1] += pointsScored;
+			oppsTurn = false;
+		} else {
+			std::cout << "Your opponents took a shot and missed!" << std::endl;
 		}
-
+		if (rand() % 100 < 50 && oppsTurn == true) {
+			std::cout << "Your opponents kept possession." << std::endl;
+		} else {
+			std::cout << "\nYou've gained possession!" << std::endl;
+			oppsTurn = false;
+			havePossesion = true;
 		}
-/*Game is over, go through the final score*/	
-std::cout << "It's the end of the game and the scores are in...\n Your opponent scored " << scores[1] << " points...\n and you scored..." << std::endl;
-if (scores[1] > scores[0]) {
-	std::cout << scores[0] << " points. Better luck next time!" << std::endl;
-} else if(scores[1] < scores[0]) {
-	std::cout << scores[0] << " points!!! Congratulations!!!" << std::endl;
-}
-else if (scores[1] == scores[0]) {
-	std::cout << scores[0] << " points! That's a tie! Look's like a rematch is in order!" << std::endl;
-}
-else {
-	std::cout << scores[0] << " points? You broke my program? Um...what?" << std::endl;
-}
+	}
 
-	return 0;
+	}
+	
+	/*Game is over, go through the final score*/	
+	std::cout << "It's the end of the game and the scores are in...\n Your opponent scored " << scores[1] << " points...\n and you scored..." << std::endl;
+	if (scores[1] > scores[0]) {
+		std::cout << scores[0] << " points. Better luck next time!" << std::endl;
+	} else if(scores[1] < scores[0]) {
+		std::cout << scores[0] << " points!!! Congratulations!!!" << std::endl;
+	}
+	else if (scores[1] == scores[0]) {
+		std::cout << scores[0] << " points! That's a tie! Look's like a rematch is in order!" << std::endl;
+	}
+	else {
+		std::cout << scores[0] << " points? You broke my program? Um...what?" << std::endl;
+	}
+
+		return 0;
 }
